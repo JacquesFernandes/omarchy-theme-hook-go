@@ -1,4 +1,4 @@
-package omarchy
+package command
 
 import (
 	"log"
