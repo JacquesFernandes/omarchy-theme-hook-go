@@ -43,7 +43,7 @@ func TestLoadColorsToml(t *testing.T) {
 		"bright_magenta",
 	}
 
-	themeMap := loadColorsToml(catppuccinThemeToml)
+	themeMap := LoadColorsToml(catppuccinThemeToml)
 
 	for _, expectedKey := range expectedKeys {
 		t.Run(expectedKey, func(t *testing.T) {

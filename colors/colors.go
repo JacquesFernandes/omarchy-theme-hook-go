@@ -43,7 +43,7 @@ type Colors struct {
 	brightMagenta string
 }
 
-func loadColorsToml(path string) map[string]string {
+func LoadColorsToml(path string) map[string]string {
 	result := make(map[string]string)
 
 	file, err := os.Open(path)
