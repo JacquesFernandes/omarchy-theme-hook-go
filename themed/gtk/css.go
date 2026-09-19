@@ -1,14 +1,29 @@
-package themed
+package gtk
 
-import (
-	"log"
-	"os"
-	"path/filepath"
-	"strings"
-	"text/template"
-)
+import "strings"
 
-const remainingGTKThemeRules string = `
+var templateCSSRules = strings.TrimSpace(`
+@define-color background     {{.background}};
+@define-color foreground     {{.foreground}};
+@define-color black          {{.background}};
+@define-color red            {{.red}};
+@define-color green          {{.green}};
+@define-color yellow         {{.yellow}};
+@define-color blue           {{.blue}};
+@define-color magenta        {{.magenta}};
+@define-color cyan           {{.cyan}};
+@define-color white          {{.light_foreground}};
+@define-color bright_black   {{.lighter_background}};
+@define-color bright_red     {{.bright_red}};
+@define-color bright_green   {{.bright_green}};
+@define-color bright_yellow  {{.bright_yellow}};
+@define-color bright_blue    {{.bright_blue}};
+@define-color bright_magenta {{.bright_magenta}};
+@define-color bright_cyan    {{.bright_cyan}};
+@define-color bright_white   {{.bright_foreground}};
+	`)
+
+const remainingCSSRules string = `
 @define-color accent_bg_color @blue;
 @define-color accent_fg_color @background;
 @define-color accent_color @cyan;
@@ -157,58 +172,3 @@ toast button.circular.flat.image-button:hover {
 				brightness(103%) contrast(94%);
 } */
 	`
-
-// createGtkTheme generates the CSS from a "template"
-func CreateGtkTheme(themeMap map[string]string) string {
-	gtkTemplateString := `
-@define-color background     {{.background}};
-@define-color foreground     {{.foreground}};
-@define-color black          {{.background}};
-@define-color red            {{.red}};
-@define-color green          {{.green}};
-@define-color yellow         {{.yellow}};
-@define-color blue           {{.blue}};
-@define-color magenta        {{.magenta}};
-@define-color cyan           {{.cyan}};
-@define-color white          {{.light_foreground}};
-@define-color bright_black   {{.lighter_background}};
-@define-color bright_red     {{.bright_red}};
-@define-color bright_green   {{.bright_green}};
-@define-color bright_yellow  {{.bright_yellow}};
-@define-color bright_blue    {{.bright_blue}};
-@define-color bright_magenta {{.bright_magenta}};
-@define-color bright_cyan    {{.bright_cyan}};
-@define-color bright_white   {{.bright_foreground}};
-	`
-	gtkTemplateString = strings.TrimSpace(gtkTemplateString)
-
-	gtkTemplate, err := template.New("gtk").Parse(gtkTemplateString)
-	if err != nil {
-		log.Panic("error creating template:", err)
-	}
-
-	tempDirPath := filepath.Join(os.TempDir(), "omarchy-theme-hook-go", "themed")
-	err = os.MkdirAll(tempDirPath, 0o755)
-	if err != nil {
-		log.Panic("error creating temp dir path:", err)
-	}
-
-	outputTempFile, err := os.CreateTemp(tempDirPath, "gtk.css")
-	if err != nil {
-		log.Panic("error creating outputTempFile:", err)
-	}
-	defer outputTempFile.Close()
-
-	// Deliberately only execute and write the template on a limited set of lines
-	err = gtkTemplate.Execute(outputTempFile, themeMap)
-	if err != nil {
-		log.Panic("error executing template:", err)
-	}
-
-	// write the remaining static CSS rules
-	_, err = outputTempFile.WriteString(remainingGTKThemeRules)
-	if err != nil {
-		log.Panic("error trying to write remaining GTK theme Rules:", err)
-	}
-	return outputTempFile.Name()
-}

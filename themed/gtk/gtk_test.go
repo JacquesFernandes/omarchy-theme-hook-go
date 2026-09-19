@@ -1,4 +1,4 @@
-package themed
+package gtk
 
 import (
 	"log"
@@ -80,4 +80,8 @@ var lupineThemeMap map[string]string = map[string]string{
 func TestCreateGtkTheme(t *testing.T) {
 	tempFilePath := CreateGtkTheme(lupineThemeMap)
 	log.Print(tempFilePath)
+}
+
+func TestUpdateGtkThemeFiles(t *testing.T) {
+	UpdateGtkThemeFiles("foo/bar")
 }
