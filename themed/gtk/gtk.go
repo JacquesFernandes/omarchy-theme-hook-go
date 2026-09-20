@@ -2,12 +2,13 @@ package gtk
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"path/filepath"
 	"text/template"
 	"time"
+
+	"JacquesFernandes/omarchy_theme_hook_go/fileutils"
 )
 
 // createGtkTheme generates the CSS from a "template"
@@ -48,46 +49,41 @@ func CreateGtkTheme(themeMap map[string]string) string {
 func UpdateGtkThemeFiles(newThemeFilePath string) error {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		log.Panic("error trying to get user home dir:", err)
+		return err
 	}
 
+	now := time.Now().Unix()
 	gtk3DirPath := filepath.Join(homeDir, ".config", "gtk-3.0")
 	gtk3CSSPath := filepath.Join(gtk3DirPath, "gtk.css")
-	gtk3CSSBackupPath := filepath.Join(gtk3DirPath, fmt.Sprintf("gtk.css.%d", time.Now().Unix()))
+	gtk3CSSBackupPath := filepath.Join(gtk3DirPath, fmt.Sprintf("gtk.css.%d", now))
 	gtk4DirPath := filepath.Join(homeDir, ".config", "gtk-4.0")
 	gtk4CSSPath := filepath.Join(gtk4DirPath, "gtk.css")
-	gtk4CSSBackupPath := filepath.Join(gtk4DirPath, fmt.Sprintf("gtk.css.%d", time.Now().Unix()))
+	gtk4CSSBackupPath := filepath.Join(gtk4DirPath, fmt.Sprintf("gtk.css.%d", now))
 
 	log.Println("gtk 3", gtk3DirPath, gtk3CSSPath, gtk3CSSBackupPath)
 	log.Println("gtk 4", gtk4DirPath, gtk4CSSPath, gtk4CSSBackupPath)
 
-	// Get read access to generated css file. Panic if not available
-	sourceCSSFile, err := os.Open(newThemeFilePath)
-	if err != nil {
-		log.Panic("error trying to read generated CSS temp file:", sourceCSSFile)
-	}
-	defer sourceCSSFile.Close()
-
 	// rename the existing gtk3 CSS file to a backup
 	err = os.Rename(gtk3CSSPath, gtk3CSSBackupPath)
 	if err != nil {
-		log.Panic("error when creating backup of gtk3 css:", err)
+		return err
 	}
 
-	// Create the new GTK3 CSS file
-	newGTK3CSSFile, err := os.Create(gtk3CSSPath)
+	// Copy new CSS file to gtk3 location
+	if err = fileutils.CopyFile(newThemeFilePath, gtk3CSSPath); err != nil {
+		return err
+	}
+
+	// rename the existing gtk4 CSS file to a backup
+	err = os.Rename(gtk4CSSPath, gtk4CSSBackupPath)
 	if err != nil {
-		log.Panic("error trying to create target GTK3 CSS file:", err)
-	}
-	defer newGTK3CSSFile.Close()
-
-	// Write/Copy the generated CSS file into the gtk3 dir as the new gtk.css
-	_, err = io.Copy(newGTK3CSSFile, sourceCSSFile)
-	if err != nil {
-		log.Panic("error trying to copy generated CSS file into new GTK3 locationn")
+		return err
 	}
 
-	// TODO: Write the logic for GTK4
+	// Copy new CSS file to gtk4 location
+	if err = fileutils.CopyFile(newThemeFilePath, gtk4CSSPath); err != nil {
+		return err
+	}
 
 	return nil
 }
