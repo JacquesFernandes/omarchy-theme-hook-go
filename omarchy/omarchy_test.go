@@ -1,12 +1,12 @@
-package command
+package omarchy
 
 import (
 	"log"
 	"testing"
 )
 
-func TestOmarchyThemeList(t *testing.T) {
-	themes, err := OmarchyThemeList()
+func TestThemeList(t *testing.T) {
+	themes, err := ThemeList()
 	if err != nil {
 		t.Error(err)
 	}
@@ -16,14 +16,14 @@ func TestOmarchyThemeList(t *testing.T) {
 	}
 }
 
-func TestOmarchyThemeDir(t *testing.T) {
-	themes, err := OmarchyThemeList()
+func TestThemeDir(t *testing.T) {
+	themes, err := ThemeList()
 	if err != nil {
 		t.Error(err)
 	}
 
 	for _, theme := range themes {
-		path, err := OmarchyThemeDir(theme)
+		path, err := ThemeDir(theme)
 		if err != nil {
 			t.Error(err)
 		}
@@ -32,8 +32,8 @@ func TestOmarchyThemeDir(t *testing.T) {
 	}
 }
 
-func TestOmarchyThemeCurrent(t *testing.T) {
-	theme, err := OmarchyThemeCurrent()
+func TestCurrentThemeName(t *testing.T) {
+	theme, err := CurrentThemeName()
 	if err != nil {
 		t.Error(err)
 	}

@@ -1,17 +1,12 @@
-package command
+// Package omarchy is used to make shell calls specific to the omarchy os
+package omarchy
 
 import (
 	"os/exec"
 	"strings"
 )
 
-func DoesCommandExist(cmd string) bool {
-	_, err := exec.LookPath(cmd)
-
-	return err == nil
-}
-
-func OmarchyThemeList() ([]string, error) {
+func ThemeList() ([]string, error) {
 	cmd := exec.Command("omarchy-theme-list")
 	output, err := cmd.Output()
 	if err != nil {
@@ -32,7 +27,7 @@ func OmarchyThemeList() ([]string, error) {
 	return themeList, nil
 }
 
-func OmarchyThemeDir(theme string) (string, error) {
+func ThemeDir(theme string) (string, error) {
 	cmd := exec.Command("omarchy-theme-dir", theme)
 	output, err := cmd.Output()
 	if err != nil {
@@ -43,7 +38,7 @@ func OmarchyThemeDir(theme string) (string, error) {
 	return strings.Trim(stringOutput, "\n"), nil
 }
 
-func OmarchyThemeCurrent() (string, error) {
+func CurrentThemeName() (string, error) {
 	cmd := exec.Command("omarchy-theme-current")
 	output, err := cmd.Output()
 	if err != nil {
