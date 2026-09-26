@@ -3,11 +3,13 @@ package gtk
 import (
 	"log"
 	"testing"
+
+	"JacquesFernandes/omarchy_theme_hook_go/themed"
 )
 
 // Taken from the Catppuccin theme
 // This theme is slightly darker
-var catppuccinThemeMap map[string]string = map[string]string{
+var catppuccinThemeMap themed.ThemeMap = themed.ThemeMap{
 	"mode": "dark",
 
 	"accent":    "#89b4fa",
@@ -43,7 +45,7 @@ var catppuccinThemeMap map[string]string = map[string]string{
 
 // Taken from the Lupine Theme
 // This theme is light
-var lupineThemeMap map[string]string = map[string]string{
+var lupineThemeMap themed.ThemeMap = themed.ThemeMap{
 	"mode": "light",
 
 	"accent":    "#3264eb",
@@ -88,7 +90,7 @@ func TestCreateGtkTheme(t *testing.T) {
 func TestUpdateGtkThemeFiles(t *testing.T) {
 	tempThemePath, err := CreateGtkTheme(catppuccinThemeMap)
 	if err != nil {
-		t.Errorf("CreateGtkTheme failed for some reason:", err)
+		t.Error("CreateGtkTheme failed for some reason:", err)
 	}
 	UpdateGtkThemeFiles(tempThemePath)
 }

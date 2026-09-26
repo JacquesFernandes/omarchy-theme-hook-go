@@ -9,10 +9,11 @@ import (
 	"time"
 
 	"JacquesFernandes/omarchy_theme_hook_go/fileutils"
+	"JacquesFernandes/omarchy_theme_hook_go/themed"
 )
 
 // createGtkTheme generates the CSS from a "template"
-func CreateGtkTheme(themeMap map[string]string) (string, error) {
+func CreateGtkTheme(themeMap themed.ThemeMap) (string, error) {
 	gtkTemplate, err := template.New("gtk").Parse(templateCSSRules)
 	if err != nil {
 		return "", fmt.Errorf("error creating GTK template: %w", err)

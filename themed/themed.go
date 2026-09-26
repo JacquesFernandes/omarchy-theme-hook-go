@@ -2,3 +2,5 @@
 // This is the root file, but there will be a file for each of the
 // supported apps
 package themed
+
+type ThemeMap = map[string]string
