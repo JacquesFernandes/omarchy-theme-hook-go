@@ -3,7 +3,10 @@ package fileutils
 import (
 	"bufio"
 	"os"
+	"path/filepath"
 )
+
+const TEMP_DIR_BASE = "omarchy-theme-hook-go"
 
 func CopyFile(sourcePath, destPath string) error {
 	sourceFile, err := os.Open(sourcePath)
@@ -38,4 +41,14 @@ func CopyFile(sourcePath, destPath string) error {
 	}
 
 	return nil
+}
+
+func CreateTempProjectFile(dirName, filename string) (*os.File, error) {
+	tempDirPath := os.TempDir()
+	err := os.MkdirAll(filepath.Join(tempDirPath, TEMP_DIR_BASE, dirName), 0o755)
+	if err != nil {
+		return nil, err
+	}
+
+	return os.CreateTemp(tempDirPath, filename)
 }
