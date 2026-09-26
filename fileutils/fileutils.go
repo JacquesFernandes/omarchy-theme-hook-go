@@ -8,6 +8,7 @@ import (
 
 const TEMP_DIR_BASE = "omarchy-theme-hook-go"
 
+// CopyFile is a util function to do a buffered-copy of a text file from sourcePath to destPath
 func CopyFile(sourcePath, destPath string) error {
 	sourceFile, err := os.Open(sourcePath)
 	if err != nil {
@@ -43,6 +44,9 @@ func CopyFile(sourcePath, destPath string) error {
 	return nil
 }
 
+// CreateTempProjectFile creates a temp-file using `filename` and appending it with a random suffix.
+// This file is created in the directory OS_TEMP_DIR/omarchy-theme-hook-go/`dirName`
+// The resulting file has it's file handler returned, if successful.
 func CreateTempProjectFile(dirName, filename string) (*os.File, error) {
 	tempDirPath := os.TempDir()
 	err := os.MkdirAll(filepath.Join(tempDirPath, TEMP_DIR_BASE, dirName), 0o755)
