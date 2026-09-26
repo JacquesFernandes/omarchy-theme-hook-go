@@ -12,36 +12,30 @@ import (
 )
 
 // createGtkTheme generates the CSS from a "template"
-func CreateGtkTheme(themeMap map[string]string) string {
+func CreateGtkTheme(themeMap map[string]string) (string, error) {
 	gtkTemplate, err := template.New("gtk").Parse(templateCSSRules)
 	if err != nil {
-		log.Panic("error creating template:", err)
+		return "", fmt.Errorf("error creating GTK template: %w", err)
 	}
 
-	tempDirPath := filepath.Join(os.TempDir(), "omarchy-theme-hook-go", "themed")
-	err = os.MkdirAll(tempDirPath, 0o755)
+	outputTempFile, err := fileutils.CreateTempProjectFile("themed", "gtk.css")
 	if err != nil {
-		log.Panic("error creating temp dir path:", err)
-	}
-
-	outputTempFile, err := os.CreateTemp(tempDirPath, "gtk.css")
-	if err != nil {
-		log.Panic("error creating outputTempFile:", err)
+		return "", fmt.Errorf("error creating outputTempFile: %w", err)
 	}
 	defer outputTempFile.Close()
 
 	// Deliberately only execute and write the template on a limited set of lines
 	err = gtkTemplate.Execute(outputTempFile, themeMap)
 	if err != nil {
-		log.Panic("error executing template:", err)
+		return "", fmt.Errorf("error executing template:", err)
 	}
 
 	// write the remaining static CSS rules
 	_, err = outputTempFile.WriteString(remainingCSSRules)
 	if err != nil {
-		log.Panic("error trying to write remaining GTK theme Rules:", err)
+		return "", fmt.Errorf("error trying to write remaining GTK theme Rules:", err)
 	}
-	return outputTempFile.Name()
+	return outputTempFile.Name(), nil
 }
 
 // UpdateGtkThemeFiles takes the path of the generated CSS file and updates the gtk-3.0 and gtk-4.0 css files

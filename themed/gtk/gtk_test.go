@@ -78,10 +78,17 @@ var lupineThemeMap map[string]string = map[string]string{
 }
 
 func TestCreateGtkTheme(t *testing.T) {
-	tempFilePath := CreateGtkTheme(lupineThemeMap)
+	tempFilePath, err := CreateGtkTheme(lupineThemeMap)
+	if err != nil {
+		t.Error("Got unexpected error:", err)
+	}
 	log.Print(tempFilePath)
 }
 
 func TestUpdateGtkThemeFiles(t *testing.T) {
-	UpdateGtkThemeFiles("foo/bar")
+	tempThemePath, err := CreateGtkTheme(catppuccinThemeMap)
+	if err != nil {
+		t.Errorf("CreateGtkTheme failed for some reason:", err)
+	}
+	UpdateGtkThemeFiles(tempThemePath)
 }
