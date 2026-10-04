@@ -29,3 +29,20 @@ func CreateSteamTheme(themeMap themed.ThemeMap) (string, error) {
 
 	return outputTempFile.Name(), nil
 }
+
+func UpdateSteamTheme(newThemeFilePath string) error {
+	afsIsInstalled := checkForAdwaitaForSteam()
+
+	if !afsIsInstalled {
+		expectedPath := adwaitaForSteamPath()
+
+		return &missingDependencyError{
+			commandName: "adwaita-for-steam",
+			instructions: []string{
+				fmt.Sprintf("Run `git clone https://github.com/tkashkin/Adwaita-for-Steam %s`", expectedPath),
+			},
+		}
+	}
+
+	return nil
+}
