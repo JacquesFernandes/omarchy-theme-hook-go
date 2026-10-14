@@ -84,6 +84,7 @@ const templateCSSRules string = `
 	--adw-headerbar-darker-shade: rgba(0, 0, 0, 0.9) !important;
 
 /* Split pane views */
+	/*
 	--adw-sidebar-bg-rgb: {{.rgb_primary_background}} !important;
 	--adw-sidebar-fg-rgb: {{.rgb_primary_foreground}} !important;
 	--adw-sidebar-backdrop-rgb: {{.rgb_bright_black}} !important;
@@ -94,17 +95,31 @@ const templateCSSRules string = `
 	--adw-secondary-sidebar-backdrop-rgb: {{.rgb_bright_black}} !important;
 	--adw-secondary-sidebar-shade-rgb: 0, 0, 0 !important;
 	--adw-secondary-sidebar-shade-a: 0.36 !important;
+	*/
+	--adw-sidebar-bg: {{.background}} !important;
+	--adw-sidebar-fg: {{.foreground}} !important;
+	--adw-sidebar-backdrop: {{.lighter_background}} !important;
+	--adw-sidebar-shade: rgba(0, 0, 0, 0.36) !important;
 
 /* Cards, boxed lists */
+	/*
 	--adw-card-bg-rgb: 255, 255, 255 !important;
 	--adw-card-bg-a: 0.08 !important;
 	--adw-card-fg-rgb: 255, 255, 255 !important;
 	--adw-card-shade-rgb: 0, 0, 0 !important;
 	--adw-card-shade-a: 0.36 !important;
+	*/
+	--adw-card-bg: rgba(255, 255, 255, 0.08) !important;
+	--adw-card-fg: rgb(0, 0, 0) !important;
+	--adw-card-shade: rgba(0, 0, 0, 0.36) !important;
 
 /* Dialogs */
+	/*
 	--adw-dialog-bg-rgb: {{.rgb_primary_background}} !important;
 	--adw-dialog-fg-rgb: {{.rgb_primary_foreground}} !important;
+	*/
+	--adw-dialog-bg: {{.background}} !important;
+	--adw-dialog-fg: {{.foreground}} !important;
 
 	/* Popovers */
 	--adw-popover-bg-rgb: {{.rgb_primary_background}} !important;
