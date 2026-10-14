@@ -29,7 +29,7 @@ const templateCSSRules string = `
 	*/
 	--adw-success-bg-light: {{.green}} !important;
 	--adw-success-bg-dark: {{.green}} !important;
-	--adw-success-fg: {{.black}} !important;
+	--adw-success-fg: {{.background}} !important;
 
 	/*
 	--adw-warning-bg-rgb: {{.rgb_bright_yellow}} !important;
@@ -48,7 +48,7 @@ const templateCSSRules string = `
 	*/
 	--adw-error-bg-light: {{.red}} !important;
 	--adw-error-bg-dark: {{.red}} !important;
-	--adw-error-fg: {{.black}} !important;
+	--adw-error-fg: {{.background}} !important;
 
 /* Window */
 	/*
@@ -63,7 +63,7 @@ const templateCSSRules string = `
 	--adw-view-bg-rgb: {{.rgb_normal_black}} !important;
 	--adw-view-fg-rgb: {{.rgb_primary_foreground}} !important;
 	*/
-	--adw-view-bg: {{.black}} !important;
+	--adw-view-bg: {{.background}} !important;
 	--adw-view-fg: {{.foreground}} !important;
 
 /* Header bar, search bar, tab bar */
@@ -79,7 +79,7 @@ const templateCSSRules string = `
 	*/
 	--adw-headerbar-bg: {{.background}} !important;
 	--adw-headerbar-fg: {{.foreground}} !important;
-	--adw-headerbar-backdrop: {{.black}} !important;
+	--adw-headerbar-backdrop: {{.background}} !important;
 	--adw-headerbar-shade: rgba(0, 0, 0, 0.36) !important;
 	--adw-headerbar-darker-shade: rgba(0, 0, 0, 0.9) !important;
 

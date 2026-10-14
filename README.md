@@ -18,6 +18,7 @@ A hobbyist attempt at trying to port the [omarchy-theme-hook](https://github.com
 | `normal_magenta` | `magenta` |
 | `normal_cyan` | `cyan` |
 | `normal_white` | `light_foreground` |
+| `normal_black` | `background` |
 | `bright_black` | `lighter_background` |
 | `bright_red` | `bright_red` |
 | `bright_green` | `bright_green` |
