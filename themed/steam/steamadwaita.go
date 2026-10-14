@@ -41,11 +41,13 @@ func checkForAdwaitaForSteam() bool {
 
 // createAdwaitaForSteamOmarchyThemeDir uses os.MkdirAll to create the directory where
 // the omarchy.css file will live (that will then be applied to Steam).
+// This function returns the path where the omarchy.css theme file is to be placed.
+// This function also returns any error, if applicable
 //
 // This is safe to run multiple times as it'll just finish quietly if the directory
 // already exists
-func createAdwaitaForSteamOmarchyThemeDir() error {
+func createAdwaitaForSteamOmarchyThemeDir() (string, error) {
 	afsPath := adwaitaForSteamPath()
 	omarchyThemeDirPath := filepath.Join(afsPath, "adwaita", "colorthemes", "omarchy")
-	return os.MkdirAll(omarchyThemeDirPath, 0o755)
+	return omarchyThemeDirPath, os.MkdirAll(omarchyThemeDirPath, 0o755)
 }

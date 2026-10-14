@@ -2,6 +2,9 @@ package steam
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
 	"text/template"
 
 	"JacquesFernandes/omarchy_theme_hook_go/fileutils"
@@ -32,16 +35,41 @@ func CreateSteamTheme(themeMap themed.ThemeMap) (string, error) {
 
 func UpdateSteamTheme(newThemeFilePath string) error {
 	afsIsInstalled := checkForAdwaitaForSteam()
+	expectedPath := adwaitaForSteamPath()
 
 	if !afsIsInstalled {
-		expectedPath := adwaitaForSteamPath()
-
 		return &missingDependencyError{
 			commandName: "adwaita-for-steam",
 			instructions: []string{
-				fmt.Sprintf("Run `git clone https://github.com/tkashkin/Adwaita-for-Steam %s`", expectedPath),
+				fmt.Sprintf("Run `git clone https://github.com/tkashkin/Adwaita-for-Steam --revision 171aa65e8d186cf0fe723cafb4498d10f1ae8baf %s`", expectedPath),
 			},
 		}
+	}
+
+	omarchyThemeDirPath, err := createAdwaitaForSteamOmarchyThemeDir()
+	if err != nil {
+		return err
+	}
+
+	omarchyThemeFilePath := filepath.Join(omarchyThemeDirPath, "omarchy.css")
+	err = fileutils.CopyFile(newThemeFilePath, omarchyThemeFilePath)
+	if err != nil {
+		fmt.Println("Error when copying file:", err)
+		return err
+	}
+
+	err = os.Chdir(expectedPath)
+	if err != nil {
+		fmt.Println("Error when changing dir:", err)
+		return err
+	}
+
+	cmd := exec.Command("python3", "./install.py", "--color-theme", "omarchy", "--extras", "library/hide-whats-new")
+	cmd.Dir = expectedPath
+	result, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println("error when running adwaita-for-steam:", string(result), cmd.Dir)
+		return err
 	}
 
 	return nil
