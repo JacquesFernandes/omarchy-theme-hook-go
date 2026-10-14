@@ -122,16 +122,28 @@ const templateCSSRules string = `
 	--adw-dialog-fg: {{.foreground}} !important;
 
 	/* Popovers */
+	/*
 	--adw-popover-bg-rgb: {{.rgb_primary_background}} !important;
 	--adw-popover-fg-rgb: {{.rgb_primary_foreground}} !important;
 	--adw-popover-shade-rgb: 0, 0, 0 !important;
 	--adw-popover-shade-a: 0.36 !important;
+	*/
+	--adw-popover-bg: {{.background}} !important;
+	--adw-popover-fg: {{.foreground}} !important;
+	--adw-popover-shade: rgba(0, 0, 0, 0.36) !important;
 
 /* Thumbnails */
+	/*
 	--adw-thumbnail-bg-rgb: {{.rgb_primary_background}} !important;
+	*/
+	--adw-thumbnail-bg: {{.background}} !important;
+	--adw-thumbnail-fg: {{.foreground}} !important;
 
 /* Miscellaneous */
+	/*
 	--adw-shade-rgb: 0, 0, 0 !important;
 	--adw-shade-a: 0.36 !important;
+	*/
+	--adw-shade: rgba(0, 0, 0, 0.36) !important;
 }
 `
