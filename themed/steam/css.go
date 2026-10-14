@@ -59,10 +59,15 @@ const templateCSSRules string = `
 	--adw-window-fg: {{.foreground}} !important;
 
 /* Views - e.g. text view or tree view */
+	/*
 	--adw-view-bg-rgb: {{.rgb_normal_black}} !important;
 	--adw-view-fg-rgb: {{.rgb_primary_foreground}} !important;
+	*/
+	--adw-view-bg: {{.black}} !important;
+	--adw-view-fg: {{.foreground}} !important;
 
 /* Header bar, search bar, tab bar */
+	/*
 	--adw-headerbar-bg-rgb: {{.rgb_primary_background}} !important;
 	--adw-headerbar-fg-rgb: {{.rgb_primary_foreground}} !important;
 	--adw-headerbar-border-rgb: {{.rgb_bright_black}} !important;
@@ -71,6 +76,12 @@ const templateCSSRules string = `
 	--adw-headerbar-shade-a: 0.36 !important;
 	--adw-headerbar-darker-shade-rgb: 0, 0, 0 !important;
 	--adw-headerbar-darker-shade-a: 0.9 !important;
+	*/
+	--adw-headerbar-bg: {{.background}} !important;
+	--adw-headerbar-fg: {{.foreground}} !important;
+	--adw-headerbar-backdrop: {{.black}} !important;
+	--adw-headerbar-shade: rgba(0, 0, 0, 0.36) !important;
+	--adw-headerbar-darker-shade: rgba(0, 0, 0, 0.9) !important;
 
 /* Split pane views */
 	--adw-sidebar-bg-rgb: {{.rgb_primary_background}} !important;
