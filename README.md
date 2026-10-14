@@ -31,8 +31,9 @@ A hobbyist attempt at trying to port the [omarchy-theme-hook](https://github.com
 
 I've ordered this based on (personal) priority, whether it comes pre-installed on omarchy, and then everything else
 
-- [] gtk
-- [] steam
+- [x] gtk
+- [-] steam
+  - Currently working on adapting css template to commit [171aa65](https://github.com/tkashkin/Adwaita-for-Steam/commit/171aa65e8d186cf0fe723cafb4498d10f1ae8baf) of Adwaita-for-Steam
 - [] discord
 - [] spotify
 - [] typora
