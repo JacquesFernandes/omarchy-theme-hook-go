@@ -48,8 +48,9 @@ func CopyFile(sourcePath, destPath string) error {
 // This file is created in the directory OS_TEMP_DIR/omarchy-theme-hook-go/`dirName`
 // The resulting file has it's file handler returned, if successful.
 func CreateTempProjectFile(dirName, filename string) (*os.File, error) {
-	tempDirPath := os.TempDir()
-	err := os.MkdirAll(filepath.Join(tempDirPath, PROJECT_TEMP_DIR_BASE, dirName), 0o755)
+	osTempDirPath := os.TempDir()
+	tempDirPath := filepath.Join(osTempDirPath, PROJECT_TEMP_DIR_BASE, dirName)
+	err := os.MkdirAll(tempDirPath, 0o755)
 	if err != nil {
 		return nil, err
 	}
