@@ -41,13 +41,22 @@ const templateCSSRules string = `
 	--adw-warning-bg-dark: {{.bright_yellow}} !important;
 	--adw-warning-fg: {{.background}} !important;
 
+	/*
 	--adw-error-bg-rgb: {{.rgb_normal_red}} !important;
 	--adw-error-fg-rgb: {{.rgb_normal_black}} !important;
 	--adw-error-rgb: {{.rgb_normal_red}} !important;
+	*/
+	--adw-error-bg-light: {{.red}} !important;
+	--adw-error-bg-dark: {{.red}} !important;
+	--adw-error-fg: {{.black}} !important;
 
 /* Window */
+	/*
 	--adw-window-bg-rgb: {{.rgb_primary_background}} !important;
 	--adw-window-fg-rgb: {{.rgb_primary_foreground}} !important;
+	*/
+	--adw-window-bg: {{.background}} !important;
+	--adw-window-fg: {{.foreground}} !important;
 
 /* Views - e.g. text view or tree view */
 	--adw-view-bg-rgb: {{.rgb_normal_black}} !important;
