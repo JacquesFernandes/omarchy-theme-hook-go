@@ -5,18 +5,52 @@
 package main
 
 import (
-	"os/user"
-	"path"
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+
+	"JacquesFernandes/omarchy_theme_hook_go/colors"
+	"JacquesFernandes/omarchy_theme_hook_go/omarchy"
+	"JacquesFernandes/omarchy_theme_hook_go/themed/gtk"
 )
 
-func getOmarchyCurrentThemeDirPath() string {
-	currentUser, err := user.Current()
-	if err != nil {
-		panic(err)
+func prompt(question string) string {
+	fmt.Println(question)
+
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	if err := scanner.Err(); err != nil {
+		log.Fatal("error trying to prompt:", err)
 	}
 
-	return path.Join(currentUser.HomeDir, ".config", "omarchy", "current", "theme", "colors.toml")
+	return scanner.Text()
 }
 
 func main() {
+	currentTheme, err := omarchy.CurrentThemeName()
+	if err != nil {
+		log.Fatal("error trying to get current theme name:", err)
+	}
+
+	themeDirPath, err := omarchy.ThemeDirPath(currentTheme)
+	if err != nil {
+		log.Fatal("error trying to get current theme path:", err)
+	}
+
+	themeColorsTomlPath := filepath.Join(themeDirPath, "colors.toml")
+
+	themeColorsToml := colors.LoadColorsToml(themeColorsTomlPath)
+
+	gtkThemePath, err := gtk.CreateGtkTheme(themeColorsToml)
+	if err != nil {
+		log.Fatal("error trying to create (temp) GTK theme CSS:", err)
+	}
+
+	response := prompt(fmt.Sprintf("Temp GTK theme CSS file created at %q. Continue to apply it? (y/n):", gtkThemePath))
+
+	if response != "y" {
+		log.Fatal("Created theme file not confirmed. Quitting.")
+	}
 }
