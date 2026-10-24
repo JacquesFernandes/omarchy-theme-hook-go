@@ -12,7 +12,7 @@ import (
 	"JacquesFernandes/omarchy_theme_hook_go/themed"
 )
 
-// createGtkTheme generates the CSS from a "template"
+// CreateGtkTheme generates the CSS from a "template"
 func CreateGtkTheme(themeMap themed.ThemeMap) (string, error) {
 	gtkTemplate, err := template.New("gtk").Parse(templateCSSRules)
 	if err != nil {
