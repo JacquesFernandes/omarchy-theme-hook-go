@@ -16,14 +16,14 @@ func TestThemeList(t *testing.T) {
 	}
 }
 
-func TestThemeDir(t *testing.T) {
+func TestThemeDirPath(t *testing.T) {
 	themes, err := ThemeList()
 	if err != nil {
 		t.Error(err)
 	}
 
 	for _, theme := range themes {
-		path, err := ThemeDir(theme)
+		path, err := ThemeDirPath(theme)
 		if err != nil {
 			t.Error(err)
 		}

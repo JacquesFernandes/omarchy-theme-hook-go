@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// ThemeList returns a list of all themes on the system, inbuilt and extra.
+// Internally calls "omarchy-theme-list".
 func ThemeList() ([]string, error) {
 	cmd := exec.Command("omarchy-theme-list")
 	output, err := cmd.Output()
@@ -27,7 +29,10 @@ func ThemeList() ([]string, error) {
 	return themeList, nil
 }
 
-func ThemeDir(theme string) (string, error) {
+// ThemeDirPath returns the path to the directory of a given theme.
+// The theme is usually obtained from the output of either the
+// ThemeList function or the CurrentThemeName function
+func ThemeDirPath(theme string) (string, error) {
 	cmd := exec.Command("omarchy-theme-dir", theme)
 	output, err := cmd.Output()
 	if err != nil {
@@ -38,6 +43,8 @@ func ThemeDir(theme string) (string, error) {
 	return strings.Trim(stringOutput, "\n"), nil
 }
 
+// CurrentThemeName fetches the name of the current omarchy theme.
+// This can be used for ThemeDirPath as well.
 func CurrentThemeName() (string, error) {
 	cmd := exec.Command("omarchy-theme-current")
 	output, err := cmd.Output()
