@@ -14,6 +14,7 @@ import (
 	"JacquesFernandes/omarchy_theme_hook_go/colors"
 	"JacquesFernandes/omarchy_theme_hook_go/omarchy"
 	"JacquesFernandes/omarchy_theme_hook_go/themed/gtk"
+	"JacquesFernandes/omarchy_theme_hook_go/themed/steam"
 )
 
 func prompt(question string) string {
@@ -48,9 +49,28 @@ func main() {
 		log.Fatal("error trying to create (temp) GTK theme CSS:", err)
 	}
 
-	response := prompt(fmt.Sprintf("Temp GTK theme CSS file created at %q. Continue to apply it? (y/n):", gtkThemePath))
+	gtkThemeUserConfirmation := prompt(fmt.Sprintf("Temp GTK theme CSS file created at %q. Continue to apply it? (y/n):", gtkThemePath))
+	if gtkThemeUserConfirmation != "y" {
+		fmt.Println("Created theme file not confirmed. Quitting.")
+		return
+	}
 
-	if response != "y" {
-		log.Fatal("Created theme file not confirmed. Quitting.")
+	if err = gtk.UpdateGtkThemeFiles(gtkThemePath); err != nil {
+		log.Fatal("error trying to update GTK theme:", err)
+	}
+
+	steamThemePath, err := steam.CreateSteamTheme(themeColorsToml)
+	if err != nil {
+		log.Fatal("error trying to create (temp) Steam theme CSS:", err)
+	}
+
+	steamThemeUserConfirmation := prompt(fmt.Sprintf("Temp Steam theme CSS file created at %q. Continue to apply it? (y/n)", steamThemePath))
+	if steamThemeUserConfirmation != "y" {
+		fmt.Println("Created Steam theme file not confirmed. Quitting.")
+		return
+	}
+
+	if err = steam.UpdateSteamTheme(steamThemePath); err != nil {
+		log.Fatal("error trying to update Steam theme:", err)
 	}
 }
