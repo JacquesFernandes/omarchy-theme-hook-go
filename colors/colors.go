@@ -29,6 +29,7 @@ func LoadColorsToml(path string) map[string]string {
 			}
 
 			key, value := strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
+			value = strings.ReplaceAll(value, "\"", "")
 
 			result[key] = value
 		}
