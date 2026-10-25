@@ -34,7 +34,9 @@ I've ordered this based on (personal) priority, whether it comes pre-installed o
 
 - [x] gtk
 - [x] steam
+  - [ ] Touch up minor text colour issues in Library view
 - [] discord
+  - TODO: Work on this
 - [] spotify
 - [] typora
 - [] vscode
